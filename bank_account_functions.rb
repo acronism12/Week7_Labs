@@ -25,8 +25,7 @@ end
 def total_business_cash_in_bank( accounts )
   total_business_cash_in_bank = 0
   for account in accounts
-    account_type = account["type"]
-    if account_type == "business"
+    if account["type"] == "business"
       total_business_cash_in_bank += account["amount"]
     end
   end
@@ -39,6 +38,7 @@ def average_bank_account_value( accounts )
   for account in accounts
     total_cash += account["amount"]
     average_value = total_cash / accounts.length
+    # total_cash_in_bank( accounts ) / accounts.length  # do it on one line!
   end
   return average_value
 end
@@ -46,6 +46,8 @@ end
 def find_accounts_by_risk( accounts, risk_level )
   returned_accounts = Array.new()
   for account in accounts
+    # if account["stats"]["risk_level"] == risk_level
+    #  returned_accounts.push(accounts)
     if risk_level == "low"
       if account["stats"]["risk_level"] == "low"
         returned_accounts.push(account)
@@ -64,29 +66,53 @@ def find_accounts_by_risk( accounts, risk_level )
   return returned_accounts
 end
 
-def name_of_largest_value_account_holder( accounts )
-  account_value = 0
-  account_holder_name = nil
-  for account in accounts
-    if account["amount"] > account_value
-      account_value = account["amount"]
-      account_holder_name = account["holder_name"]
-    end
-  end
-  return account_holder_name
-end
+# def name_of_largest_value_account_holder( accounts )
+#   account_value = 0
+#   account_holder_name = nil
+#   for account in accounts
+#     if account["amount"] > account_value
+#       account_value = account["amount"]
+#       account_holder_name = account["holder_name"]
+#     end
+#   end
+#   return account_holder_name
+# end
+
+# def name_of_largest_account_holder( accounts, bank_account_type)
+#   account_value = 0
+#   account_holder_name = nil
+#   for account in accounts
+#     if bank_account_type == "personal"
+#       if account["type"] == "personal" && account["amount"] > account_value
+#           account_value = account["amount"]
+#           account_holder_name = account["holder_name"]
+#       end
+#     elsif bank_account_type == "business"
+#       if account["type"] == "business" && account["amount"] > account_value
+#           account_value = account["amount"]
+#           account_holder_name = account["holder_name"]
+#       end
+#     end
+#   end
+#   return account_holder_name
+# end
+
+
+# zjolt/chris solution for all 3
 
 def name_of_largest_account_holder( accounts, bank_account_type)
   account_value = 0
   account_holder_name = nil
-  for account in accounts
-    if bank_account_type == "personal"
-      if account["type"] == "personal" && account["amount"] > account_value
-          account_value = account["amount"]
-          account_holder_name = account["holder_name"]
+  if bank_account_type == "all"
+    for account in accounts
+      if account["amount"] > account_value
+        account_value = account["amount"]
+        account_holder_name = account["holder_name"]
       end
-    elsif bank_account_type == "business"
-      if account["type"] == "business" && account["amount"] > account_value
+    end
+  else
+    for account in accounts
+      if account["type"] == bank_account_type && account["amount"] > account_value
           account_value = account["amount"]
           account_holder_name = account["holder_name"]
       end

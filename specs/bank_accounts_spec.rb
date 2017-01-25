@@ -53,7 +53,7 @@ class BankTest < MiniTest::Test
 
   def test_name_of_largest_value_account_holder
 #    skip
-    account_holder_name = name_of_largest_value_account_holder(@accounts)
+    account_holder_name = name_of_largest_account_holder(@accounts, "all")
     assert_equal("Sandy",account_holder_name)
   end
 
